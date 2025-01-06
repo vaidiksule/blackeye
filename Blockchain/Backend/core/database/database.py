@@ -2,6 +2,11 @@ import os
 import json
 
 class BaseDB:
+    """
+    BaseDB provides a simple file-based database functionality.
+    It allows reading and writing JSON data to a file, making it reusable
+    for other classes needing persistent storage.
+    """
     def __init__(self, filename):
         """
         Initializes the BaseDB instance.
@@ -26,7 +31,7 @@ class BaseDB:
             return False  # Return False to indicate failure
 
         with open(self.filepath, 'r') as file:  # Open the file for reading
-            raw = file.readline()  # Read the first line (assuming the whole data fits on one line)
+            raw = file.read()  # Read the first line (assuming the whole data fits on one line)
             if raw:  # If there is data in the file
                 try:
                     data = json.loads(raw)  # Try to parse the raw data into a Python object (list/dict)
@@ -37,55 +42,40 @@ class BaseDB:
                 data = []  # If the file is empty, return an empty list
             return data  # Return the parsed data
 
-    # def write(self, item):
-    #     """
-    #     Writes data to the specified file. If the data is not a list, it converts it into one.
-        
-    #     Parameters:
-    #     item (any): The data to be written. It will be wrapped in a list if not already a list.
-    #     """
-    #     # Ensure the item is always a list, even if it is not provided as a list
-    #     if not isinstance(item, list):
-    #         item = [item]  # Convert to a list if it's not already one
-
-    #     # Read the existing data from the file
-    #     data = self.read()  # Read the current data in the file
-    #     if data is False:  # If the data could not be read (file is missing or corrupted)
-    #         data = []  # Initialize data as an empty list
-
-    #     # Combine the existing data with the new item(s)
-    #     data.extend(item)  # Add the new data to the existing data
-
-    #     # Write the combined data back to the file
-    #     with open(self.filepath, 'w') as file:  # Open the file for writing
-    #         try:
-    #             file.write(json.dumps(data, indent=4))  # Serialize the data to JSON with indentation for readability
-    #         except TypeError as e:  # Catch any error that occurs during serialization
-    #             print(f"Error serializing data: {e}")  # Print an error message if serialization fails
-
     def write(self, item):
         """
-        Writes data to the specified file. If the data exists, it appends the new item(s) to the existing data.
-
+        Writes data to the specified file. If the data is not a list, it converts it into one.
+        
         Parameters:
-        item (any): The data to be written. This will be added to the existing data in the file.
+        item (any): The data to be written. It will be wrapped in a list if not already a list.
         """
+        # Ensure the item is always a list
+        if not isinstance(item, list):
+            item = [item]  # If not already a list, convert the item into a list.
 
-        # Read the current data from the file
-        data = self.read()
+        # Read the existing data from the file 
+        data = self.read()  # Fetch the existing data
 
-        if data:  # If the data exists (file is not empty)
-            data = data + item  # Append the new item to the existing data
-        else:  # If the data does not exist (file is empty or does not exist)
-            data = item  # Initialize data with the new item
-
-        # Open the file in write mode ('w+') to write the updated data
-        with open(self.filepath, "w+") as file:
-            # Serialize the combined data into JSON format and write it to the file
-            file.write(json.dumps(data))
-
+        # Append the new data to the existing data
+        # data.extend(item)  # Add the new item(s) to the existing data
+        if data:
+            data = data + item
+        else:
+            data = item
+            
+        # Write the combined data back to the file
+        with open(self.filepath, 'w') as file:  # Open the file for writing
+            try:
+                file.write(json.dumps(data, indent=4))  # Serialize the data to JSON with indentation for readability
+            except TypeError as e:  # Catch any error that occurs during serialization
+                print(f"Error serializing data: {e}")  # Print an error message if serialization fails
 
 class BlockchainDB(BaseDB):
+    """
+    BlockchainDB is a specialized database for storing blockchain data.
+    It inherits from BaseDB to reuse the reading and writing functionality
+    and adds methods specific to blockchain management.
+    """
     def __init__(self):
         """
         Initializes the BlockchainDB instance, specifically for the blockchain data file.
@@ -106,3 +96,15 @@ class BlockchainDB(BaseDB):
             return data[-1]  # Return the last block (most recent entry)
         return None  # If no data exists, return None
             
+class AccountDB(BaseDB):
+    """
+    AccountDB is a specialized database for storing account-related data.
+    It inherits from BaseDB and uses a specific filename for account data.
+    """
+    def __init__(self):
+        """
+        Initializes the AccountDB instance, specifically for the account data file.
+        Calls the parent class constructor with the filename 'account'.
+        """
+        self.filename = "account"  # The file that stores account data
+        super().__init__(self.filename)  # Call the parent class constructor with the filename

@@ -19,5 +19,3 @@ class Block:
         self.BlockHeader = BlockHeader  # The information of the block.
         self.Txcount = TxCount  # The number of transactions included in the block.
         self.Txs = Txs  # The list of transactions contained in the block.
-
-

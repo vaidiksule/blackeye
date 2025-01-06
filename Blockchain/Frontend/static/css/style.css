@@ -1,0 +1,149 @@
+/* Reset and Base Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #121212, #1f1f1f);
+    color: #ffffff;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Custom Animated Cursor */
+.trail {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #f05454;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: fadeOut 1s forwards;
+}
+
+#cursorCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none; /* Ignore cursor interactions on the canvas */
+}
+
+/* Wallet Container */
+.wallet-container {
+    background: linear-gradient(145deg, #222222, #121212);
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5), 0 -3px 5px rgba(255, 255, 255, 0.1);
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative Animation */
+.wallet-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 300%;
+    height: 300%;
+    background: conic-gradient(transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: rotate 6s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes rotate {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+/* Heading */
+.wallet-container h1 {
+    font-size: 2rem;
+    color: #00ffcc;
+    margin-bottom: 20px;
+    text-shadow: 0 0 5px #00ffcc, 0 0 15px #00ffcc;
+}
+
+/* Form Labels */
+form label {
+    font-size: 1rem;
+    color: #cccccc;
+    margin: 10px 0 5px;
+    display: block;
+}
+
+/* Form Inputs */
+form input[type="text"],
+form input[type="number"] {
+    width: 100%;
+    padding: 10px 15px;
+    border: 2px solid #333333;
+    background: #121212;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    outline: none;
+    transition: border 0.3s ease;
+}
+
+form input[type="text"]:focus,
+form input[type="number"]:focus {
+    border-color: #00ffcc;
+    box-shadow: 0 0 8px rgba(0, 255, 204, 0.7);
+}
+
+/* Submit Button */
+form input[type="submit"] {
+    background: linear-gradient(145deg, #00ffcc, #0088aa);
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-shadow: 0 0 5px #00ffcc;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+form input[type="submit"]:hover {
+    background: linear-gradient(145deg, #0088aa, #00ffcc);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 255, 204, 0.5);
+}
+
+/* Error/Message Span */
+form span {
+    font-size: 0.9rem;
+    color: #ff4444;
+    display: block;
+    margin-top: -10px;
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .wallet-container h1 {
+        font-size: 1.5rem;
+    }
+
+    form input[type="submit"] {
+        font-size: 1rem;
+    }
+}

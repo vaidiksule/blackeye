@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="../static/images/fav.PNG">
+        <link rel="stylesheet" href="../static/css/style.css">
+        <title>BlackEye</title>
+    </head>
+    <body>
+        <canvas id="cursorCanvas"></canvas>
+        <div class="wallet-container">
+        
+            <h1> Send BlackEye </h1>
+            
+            <form action="#" id = "form" method="post">
+                <label for="from">From Address:</label><br>
+                <input type="text" id="from" name="fromAddress" ><br>
+                <label for="to">To Address:</label><br>
+                <input type="text" id="to" name="toAddress" ><br><br>
+                <label for="amount">Amount:</label><br>
+                <input type="number" id="amount" name="Amount" ><br><br>
+                <span> {{ message }} </span> <br>
+                <input type="submit" value="Send">
+                
+            </form>
+        </div>
+    </body>
+    <script>
+        const canvas = document.getElementById("cursorCanvas");
+        const ctx = canvas.getContext("2d");
+    
+        // Resize the canvas to match the viewport
+        const resizeCanvas = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        };
+        resizeCanvas();
+        window.addEventListener("resize", resizeCanvas);
+    
+        // Variables to track the cursor position
+        let mouseX = 0;
+        let mouseY = 0;
+        let lastX = 0;
+        let lastY = 0;
+    
+        // Function to handle mousemove
+        const drawLine = (event) => {
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+    
+            // Set the line style
+            ctx.strokeStyle = "rgba(240, 84, 84, 0.8)";
+            ctx.lineWidth = 3;
+            ctx.lineCap = "round";
+    
+            // Draw the smooth line
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(mouseX, mouseY);
+            ctx.stroke();
+    
+            // Update the last position
+            lastX = mouseX;
+            lastY = mouseY;
+    
+            // Add a fade effect by drawing a semi-transparent rectangle over the canvas
+            ctx.fillStyle = "rgba(18, 18, 18, 0.1)"; // Match the background color
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        };
+    
+        // Initialize the starting position
+        window.addEventListener("mousemove", (e) => {
+            if (lastX === 0 && lastY === 0) {
+                lastX = e.clientX;
+                lastY = e.clientY;
+            }
+            drawLine(e);
+        });
+    
+        // Clear the canvas on resize to prevent artifacts
+        window.addEventListener("resize", () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        });
+    </script>           
+</html>

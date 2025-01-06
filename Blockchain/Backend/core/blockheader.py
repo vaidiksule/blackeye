@@ -1,4 +1,9 @@
-from Blockchain.Backend.util.util import hash256
+from Blockchain.Backend.util.util import (
+    hash256,
+    int_to_little_endian,
+    little_endian_to_int,
+    int_to_little_endian,
+)
 
 class BlockHeader:
     """
@@ -24,22 +29,21 @@ class BlockHeader:
         self.nonce = 0  # The nonce used for mining.
         self.blockHash = ""  # The resulting hash of the block.
 
-    def mine(self):
-        # Keep mining until the block hash starts with '0000'
-        while (self.blockHash[0:4]) != '0000':  
-            # Concatenate the block attributes (version, prevBlockHash, merkleRoot, timestamp, bits, nonce)
-            # and encode it to bytes before hashing. This forms the unique input for the mining process.
-            block_data = (str(self.version) + self.prevBlockHash + self.merkleRoot + 
-                        str(self.timestamp) + str(self.bits) + str(self.nonce)).encode()
-            
-            # Perform a double SHA-256 hash and convert the result to a hexadecimal string
-            # This produces the block hash that will be checked to see if it satisfies the difficulty target.
-            self.blockHash = hash256(block_data).hex()
-            
-            # Increment the nonce to try the next possible block hash in the next iteration
-            self.nonce += 1
-            
-            # Print the current mining progress (show the current nonce) on the same line
-            # The '\r' at the end allows us to overwrite the previous output in the terminal.
-            print(f"mining started {self.nonce}", end='\r')
+    def mine(self, target):
+        self.blockHash = target + 1
 
+        while self.blockHash > target:
+            self.blockHash = little_endian_to_int(
+                hash256(
+                    int_to_little_endian(self.version, 4)
+                    + bytes.fromhex(self.prevBlockHash)[::-1]
+                    + bytes.fromhex(self.merkleRoot)
+                    + int_to_little_endian(self.timestamp, 4)
+                    + self.bits
+                    + int_to_little_endian(self.nonce, 4)
+                )
+            )
+            self.nonce += 1
+            print(f"Mining Started {self.nonce}", end="\r")
+        self.blockHash = int_to_little_endian(self.blockHash, 32).hex()[::-1]
+        self.bits = self.bits.hex()
