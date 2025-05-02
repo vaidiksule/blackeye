@@ -76,11 +76,18 @@ Blocks contain:
 ---
 
 ## ▶️ Running the Application
-Locate the blockchain.py and run it to start the application.
+- Create .env file in the root (blackeye) folder and add
+```bash
+BLOCKCHAIN_PATH="Your Full Directory Path"
+#example- "E:\\Black Eye (BEYE)\\Source Code\\blackeye"
+```
+
+- Locate the blockchain.py and run it to start the application.
 ```bash
 python blockchain.py
 
 ```
+
 
 You'll see logs for:
 - Wallet key generation
