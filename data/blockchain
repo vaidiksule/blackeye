@@ -656,5 +656,52 @@
                 "TxId": "08048cd65b13dadfdf6856d612f41492f15fab043f930876fee407979304f604"
             }
         ]
+    },
+    {
+        "Height": 14,
+        "Blocksize": 167,
+        "BlockHeader": {
+            "version": 1,
+            "prevBlockHash": "0000d8d44735ee249ab054e4d54e88cee45e146d5148654b93e197d265365297",
+            "merkleRoot": "2b934fcfb6a8f2e7003871590f68ca7de3903554f37b646b25865799ff282762",
+            "timestamp": 1746203568,
+            "bits": "ffff001f",
+            "nonce": 248327,
+            "blockHash": "0000a6e89a1d7e4674b9c6b594a38405b1dea91cdf6b71e0f656565f4da79adb"
+        },
+        "Txcount": 1,
+        "Txs": [
+            {
+                "version": 1,
+                "tx_ins": [
+                    {
+                        "prev_tx": "0000000000000000000000000000000000000000000000000000000000000000",
+                        "prev_index": 4294967295,
+                        "script_sig": {
+                            "cmds": [
+                                14
+                            ]
+                        },
+                        "sequence": 4294967295
+                    }
+                ],
+                "tx_outs": [
+                    {
+                        "amount": 5000000000,
+                        "script_pubkey": {
+                            "cmds": [
+                                118,
+                                169,
+                                "394af8aefa32ba6a3de0a686b6eb205f25e3916e",
+                                136,
+                                172
+                            ]
+                        }
+                    }
+                ],
+                "locktime": 0,
+                "TxId": "622728ff995786256b647bf3543590e37dca680f59713800e7f2a8b6cf4f932b"
+            }
+        ]
     }
 ]

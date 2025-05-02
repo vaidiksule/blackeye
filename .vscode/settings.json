@@ -1,0 +1,6 @@
+{
+  "python.analysis.extraPaths": [
+    "./Blockchain/requirement",
+    "./Blockchain/requirement/pycryptodome-3.15.0",
+  ]
+}

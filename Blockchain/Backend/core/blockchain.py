@@ -1,6 +1,7 @@
 import sys
 # Adding a directory to the module search path for importing other modules
-sys.path.append('/Source Code/blackeye')
+sys.path.append('E:/Business/Black Eye (BEYE)/Source Code/production/blackeye')
+# sys.path.append('../Source Code/production/blackeye')
 
 # Importing necessary modules and classes from the Blockchain package
 from Blockchain.Backend.core.block import Block

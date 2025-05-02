@@ -2,6 +2,8 @@ from flask import Flask, render_template, request
 from Blockchain.client.sendBEYE import SendBEYE
 from Blockchain.Backend.core.Tx import Tx
 
+
+
 app = Flask(__name__)
 
 
