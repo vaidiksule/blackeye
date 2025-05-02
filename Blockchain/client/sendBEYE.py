@@ -1,3 +1,13 @@
+import os
+import sys
+from dotenv import load_dotenv
+load_dotenv()  # Load environment variables from a .env file
+
+# Get the blockchain path from environment variables
+blockchain_path = os.getenv("BLOCKCHAIN_PATH")
+sys.path.append(blockchain_path)  # Add the blockchain path to the Python path so modules can be imported
+
+
 from Blockchain.Backend.util.util import decode_base58
 from Blockchain.Backend.core.Script import Script
 from Blockchain.Backend.core.Tx import TxIn, TxOut, Tx

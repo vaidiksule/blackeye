@@ -1,3 +1,13 @@
+import os
+import sys
+from dotenv import load_dotenv
+load_dotenv()  # Load environment variables from a .env file
+
+# Get the blockchain path from environment variables
+blockchain_path = os.getenv("BLOCKCHAIN_PATH")
+sys.path.append(blockchain_path)  # Add the blockchain path to the Python path so modules can be imported
+
+
 from flask import Flask, render_template, request
 from Blockchain.client.sendBEYE import SendBEYE
 from Blockchain.Backend.core.Tx import Tx

@@ -1,5 +1,12 @@
+import os
 import sys
-sys.path.append('/Source Code/production/blackeye')
+from dotenv import load_dotenv
+load_dotenv()  # Load environment variables from a .env file
+
+# Get the blockchain path from environment variables
+blockchain_path = os.getenv("BLOCKCHAIN_PATH")
+sys.path.append(blockchain_path)  # Add the blockchain path to the Python path so modules can be imported
+
 from Blockchain.Backend.core.EllepticCurve.EllepticCurve import Sha256Point
 from Blockchain.Backend.util.util import hash160, hash256
 from Blockchain.Backend.core.database.database import AccountDB
